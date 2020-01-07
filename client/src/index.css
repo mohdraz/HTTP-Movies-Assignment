@@ -75,3 +75,26 @@ body {
   color: red;
   text-align: center;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form input {
+  margin: 10px 0;
+  width: 500px;
+  height: 30px;
+  border: 1px solid blue;
+  border-radius: 25px;
+  text-align: center;
+}
+form button {
+  height: 50px;
+  width: 200px;
+  border-radius: 100px;
+  font-size: 30px;
+  border: 2px solid blue;
+}

@@ -3,6 +3,7 @@ import axios from "axios";
 import MovieCard from "./MovieCard";
 export default class Movie extends React.Component {
   constructor(props) {
+    console.log("constructor props: ", props);
     super(props);
     this.state = {
       movie: null
@@ -20,6 +21,7 @@ export default class Movie extends React.Component {
   }
 
   fetchMovie = id => {
+    console.log("axios id: ", id);
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
       .then(res => this.setState({ movie: res.data }))
@@ -30,7 +32,15 @@ export default class Movie extends React.Component {
     const addToSavedList = this.props.addToSavedList;
     addToSavedList(this.state.movie);
   };
-
+  handleDelete = e => {
+    axios
+      .delete(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
+      .then(res => {
+        console.log("Delete Movie", res);
+        this.props.history.push("/");
+      })
+      .catch(err => console.log(err));
+  };
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
@@ -41,6 +51,26 @@ export default class Movie extends React.Component {
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
+        </div>
+
+        <div
+          className="save-button"
+          style={{ marginTop: "50px" }}
+          onClick={() =>
+            this.props.history.push(
+              `/update-movie/${this.props.match.params.id}`
+            )
+          }
+        >
+          Edit Movie
+        </div>
+
+        <div
+          className="save-button"
+          style={{ marginTop: "100px" }}
+          onClick={this.handleDelete}
+        >
+          Delete Movie
         </div>
       </div>
     );
